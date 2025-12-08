@@ -8,9 +8,9 @@ st.set_page_config(page_title="Aplikasi Kalkulus & Matriks", layout="wide")
 st.title("📘 Aplikasi Kalkulus & Matriks")
 st.write("Selamat datang di aplikasi final project Kalkulus & Matriks.")
 
-# ============================
-# FOTO ANGGOTA KELOMPOK
-# ============================
+# =========================================================
+#                   FOTO ANGGOTA KELOMPOK
+# =========================================================
 st.header("👥 Anggota Kelompok")
 
 cols = st.columns(4)
@@ -19,117 +19,120 @@ with cols[0]:
     st.image(
         "https://printed-amethyst-lljrkyuwdm-s5iecdnwun.edgeone.dev/a2464207-e6f1-4f25-9bce-1d230733b846.jpeg",
         caption="1. Raka Raya Pratama",
-        width=200
+        width=250
     )
 
 with cols[1]:
     st.image(
         "https://bored-pink-bfe6q7k27z-opxswhtwta.edgeone.dev/a8cc0aaa-9064-4fe4-9e4a-5dfbbafa188e.jpeg",
         caption="2. Faqih Ahmad Hersanto",
-        width=200
+        width=250
     )
 
 with cols[2]:
     st.image(
         "https://essential-coffee-ckkctskbqm-k1ufq8gqyq.edgeone.dev/5cea401c-d11b-472d-8432-99cb2bf0d364.jpeg",
         caption="3. Fajar Dewo Haryanto",
-        width=200
+        width=250
     )
 
 with cols[3]:
     st.image(
         "https://automatic-coffee-wwi6lb8ump-4yibjm8v8m.edgeone.dev/IMG_1557.png",
         caption="4. Honey Gunawan",
-        width=200
+        width=250
     )
 
-# ============================
-# MENU
-# ============================
+# =========================================================
+#                   MENU APLIKASI
+# =========================================================
 menu = st.sidebar.selectbox(
-    "Pilih Menu:",
+    "Pilih menu:",
     ["Derivatif", "Integral", "Matriks", "Kurva 3D"]
 )
 
-# ============================
-# DERIVATIF
-# ============================
+# =========================================================
+#                FITUR DERIVATIF
+# =========================================================
 if menu == "Derivatif":
-    st.header("🧮 Turunan")
+    st.header("🧮 Menghitung Turunan")
 
-    expr_input = st.text_input("Masukkan fungsi (contoh: x**2 + 3*x + 2)")
+    expr_input = st.text_input("Masukkan fungsi (misal: x**2 + 3*x + 2): ")
     x = sp.Symbol("x")
 
-    if st.button("Hitung Turunan"):
+    if st.button("Hitung Derivatif"):
         try:
             expr = sp.sympify(expr_input)
-            hasil = sp.diff(expr, x)
-            st.success(f"Hasil Turunan: {hasil}")
+            derivative = sp.diff(expr, x)
+            st.success(f"Turunan: {derivative}")
         except Exception as e:
-            st.error(e)
+            st.error(f"Error: {e}")
 
-# ============================
-# INTEGRAL
-# ============================
+# =========================================================
+#                FITUR INTEGRAL
+# =========================================================
 elif menu == "Integral":
-    st.header("📐 Integral")
+    st.header("📐 Menghitung Integral")
 
-    expr_input = st.text_input("Masukkan fungsi (contoh: x**2 + 3*x)")
+    expr_input = st.text_input("Masukkan fungsi (misal: x**2 + 3*x): ")
     x = sp.Symbol("x")
 
     if st.button("Hitung Integral"):
         try:
             expr = sp.sympify(expr_input)
-            hasil = sp.integrate(expr, x)
-            st.success(f"Hasil Integral: {hasil} + C")
+            integral = sp.integrate(expr, x)
+            st.success(f"Hasil Integral: {integral} + C")
         except Exception as e:
-            st.error(e)
+            st.error(f"Error: {e}")
 
-# ============================
-# MATRIKS
-# ============================
+# =========================================================
+#                FITUR MATRIKS
+# =========================================================
 elif menu == "Matriks":
     st.header("🔢 Operasi Matriks")
 
-    st.write("Contoh format matriks:")
-    st.code("1 2\n3 4")
+    st.write("Masukkan matriks A dan B dengan format:")
+    st.code("1 2\n3 4", language="text")
 
     A_input = st.text_area("Matriks A")
     B_input = st.text_area("Matriks B")
 
     def parse_matrix(text):
-        return np.array([[float(i) for i in row.split()] for row in text.splitlines()])
+        return np.array([[float(num) for num in row.split()] for row in text.splitlines()])
 
-    if st.button("Hitung Matriks"):
+    if st.button("Hitung Operasi Matriks"):
         try:
             A = parse_matrix(A_input)
             B = parse_matrix(B_input)
 
-            st.write("Matriks A:")
+            st.write("### Matriks A:")
             st.write(A)
 
-            st.write("Matriks B:")
+            st.write("### Matriks B:")
             st.write(B)
 
-            st.write("A + B:")
+            st.write("### A + B:")
             st.write(A + B)
 
-            st.write("A x B:")
+            st.write("### A × B:")
             st.write(A @ B)
 
-            st.write("Determinan A:")
+            st.write("### Determinan A:")
             st.write(np.linalg.det(A))
 
         except Exception as e:
-            st.error(e)
+            st.error(f"Error: {e}")
 
-# ============================
-# KURVA 3D
-# ============================
+# =========================================================
+#                FITUR KURVA 3D
+# =========================================================
 elif menu == "Kurva 3D":
-    st.header("📊 Grafik 3D")
+    st.header("📊 Visualisasi Kurva 3D")
 
-    func_input = st.text_input("Masukkan fungsi z = f(x,y)", "x**2 + y**2")
+    st.write("Masukkan fungsi dalam bentuk f(x, y)")
+    st.code("Contoh: x**2 + y**2", language="python")
+
+    func_input = st.text_input("Masukkan fungsi z = f(x, y):", "x**2 + y**2")
 
     x = sp.Symbol("x")
     y = sp.Symbol("y")
@@ -137,7 +140,7 @@ elif menu == "Kurva 3D":
     x_range = st.slider("Rentang x", -10, 10, (-5, 5))
     y_range = st.slider("Rentang y", -10, 10, (-5, 5))
 
-    if st.button("Tampilkan Grafik"):
+    if st.button("Tampilkan Kurva 3D"):
         try:
             expr = sp.sympify(func_input)
             f = sp.lambdify((x, y), expr, "numpy")
@@ -148,11 +151,15 @@ elif menu == "Kurva 3D":
             Z = f(X, Y)
 
             fig = plt.figure()
-            ax = fig.add_subplot(111, projection="3d")
+            ax = fig.add_subplot(111, projection='3d')
             ax.plot_surface(X, Y, Z)
+
+            ax.set_xlabel("X")
+            ax.set_ylabel("Y")
+            ax.set_zlabel("Z")
 
             st.pyplot(fig)
 
         except Exception as e:
-            st.error(e)
+            st.error(f"Terjadi kesalahan: {e}")
 

@@ -1,0 +1,86 @@
+import streamlit as st
+import numpy as np
+import sympy as sp
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+st.set_page_config(page_title="Aplikasi Kalkulus & Matriks", layout="wide")
+
+st.title("📘 Aplikasi Kalkulus & Matriks")
+st.write("Selamat datang di aplikasi final project Kalkulus & Matriks.")
+
+st.header("👥 Anggota Kelompok")
+cols = st.columns(4)
+
+with cols[0]:
+    st.image("https://printed-amethyst-lljrkyuwdm-s5iecdnwun.edgeone.dev/a2464207-e6f1-4f25-9bce-1d230733b846.jpeg", caption="1. Raka Raya Pratama")
+with cols[1]:
+    st.image("https://bored-pink-bfe6q7k27z-opxswhtwta.edgeone.dev/a8cc0aaa-9064-4fe4-9e4a-5dfbbafa188e.jpeg", caption="2. Faqih Ahmad Hersanto")
+with cols[2]:
+    st.image("https://essential-coffee-ckkctskbqm-k1ufq8gqyq.edgeone.dev/5cea401c-d11b-472d-8432-99cb2bf0d364.jpeg", caption="3. Fajar Dewo Haryanto")
+with cols[3]:
+    st.image("https://automatic-coffee-wwi6lb8ump-4yibjm8v8m.edgeone.dev/IMG_1557.png", caption="4. Honey Gunawan")
+
+menu = st.sidebar.selectbox(
+    "Pilih menu:",
+    ["Derivatif", "Integral", "Matriks", "Kurva 3D"]
+)
+
+if menu == "Derivatif":
+    st.header("🧮 Menghitung Turunan")
+    expr_input = st.text_input("Masukkan fungsi:")
+    x = sp.Symbol("x")
+    if st.button("Hitung Derivatif"):
+        expr = sp.sympify(expr_input)
+        st.success(sp.diff(expr, x))
+
+elif menu == "Integral":
+    st.header("📐 Menghitung Integral")
+    expr_input = st.text_input("Masukkan fungsi:")
+    x = sp.Symbol("x")
+    if st.button("Hitung Integral"):
+        expr = sp.sympify(expr_input)
+        st.success(str(sp.integrate(expr, x)) + " + C")
+
+elif menu == "Matriks":
+    st.header("🔢 Operasi Matriks")
+    A_input = st.text_area("Matriks A")
+    B_input = st.text_area("Matriks B")
+
+    def parse_matrix(text):
+        return np.array([[float(num) for num in row.split()] for row in text.splitlines()])
+
+    if st.button("Hitung Matriks"):
+        A = parse_matrix(A_input)
+        B = parse_matrix(B_input)
+        st.write("A + B", A + B)
+        st.write("A × B", A @ B)
+        st.write("Det A", np.linalg.det(A))
+
+elif menu == "Kurva 3D":
+    st.header("📊 Kurva 3D")
+    func_input = st.text_input("z = f(x,y):", "x**2 + y**2")
+    x, y = sp.symbols('x y')
+
+    if st.button("Tampilkan"):
+        expr = sp.sympify(func_input)
+        f = sp.lambdify((x, y), expr, "numpy")
+
+        X = np.linspace(-5, 5, 50)
+        Y = np.linspace(-5, 5, 50)
+        X, Y = np.meshgrid(X, Y)
+        Z = f(X, Y)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        ax.plot_surface(X, Y, Z)
+        st.pyplot(fig)
+/usr/local/bin/python3 /Users/a/Documents/finallproject/calcullus.py
+
+/usr/local/bin/python3 /Users/a/Documents/finallproject/calcullus.py
+/usr/local/bin/python3 /Users/a/Documents/finallproject/calcullus.py
+
+/usr/local/bin/python3 /Users/a/Documents/finallproject/calcullus.py
+/usr/local/bin/python3 /Users/a/Documents/finallproject/calcullus.py
+/usr/local/bin/python3 /Users/a/Documents/finallproject/calcullus.py
+
